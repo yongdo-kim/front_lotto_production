@@ -1,4 +1,4 @@
-package com.example.yd_lotto_provider
+package yongdo.proejct.yd_lotto_provider
 
 import io.flutter.embedding.android.FlutterActivity
 

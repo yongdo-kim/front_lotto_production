@@ -9,9 +9,7 @@ class AdmobBannerWidget extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: 60,
         child: AdmobBanner(
-            adUnitId: 'ca-app-pub-2398130378795170~1151207018',
-            // adUnitId: 'ca-app-pub-2398130378795170/1239956483',
-            // test adUnit Id
+            adUnitId: 'ca-app-pub-2398130378795170/1239956483',
             adSize: AdmobBannerSize.BANNER,
             listener: (AdmobAdEvent event, Map<String, dynamic> args) {
               print(event);

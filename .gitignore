@@ -30,8 +30,8 @@
 .pub-cache/
 .pub/
 /build/
-/android/app/lottokey.jks
-
+/android/app/key.jks
+/android/key.jks
 # Web related
 lib/generated_plugin_registrant.dart
 
