@@ -25,6 +25,7 @@ class HttpService {
           var lottoPlace = (responseData['data'] as List)
               .map((place) => LottoPlaceModel.fromJson(place))
               .toList();
+          print("here");
           if (lottoPlace.length > 0) {
             return lottoPlace;
           } else {
