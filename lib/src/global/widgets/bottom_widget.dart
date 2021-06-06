@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -8,6 +5,7 @@ import 'package:yd_lotto_provider/src/config/font_theme.dart';
 import 'package:yd_lotto_provider/src/providers/lotto_place_provider.dart';
 import 'package:yd_lotto_provider/src/providers/lotto_round_provider.dart';
 import 'package:yd_lotto_provider/src/providers/lotto_total_value_provider.dart';
+import 'package:get/get.dart';
 
 class CircularSlider extends StatefulWidget {
   @override
@@ -72,7 +70,7 @@ class _CircularSliderState extends State<CircularSlider> {
                   .getLottoValue(num: selectedRound);
               Provider.of<LottoPlaceProvider>(context, listen: false).getLottoPlace(num: selectedRound);
               Navigator.of(context).pop();
-              BotToast.showText(text: "업데이트 완료");
+              Get.snackbar("업데이트", "업데이트 완료");
             },
             child: Container(
               color: Colors.transparent,

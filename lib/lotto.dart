@@ -1,5 +1,5 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:yd_lotto_provider/src/config/color_theme.dart';
 import 'package:yd_lotto_provider/src/providers/lotto_place_provider.dart';
@@ -8,6 +8,8 @@ import 'package:yd_lotto_provider/src/providers/lotto_total_value_provider.dart'
 import 'package:yd_lotto_provider/src/srceens/bottomNavi/bottom_navi.dart';
 import 'package:yd_lotto_provider/src/srceens/home/home.dart';
 import 'package:yd_lotto_provider/src/srceens/map/google_map.dart';
+import 'package:yd_lotto_provider/src/srceens/number_make/number_make.dart';
+import 'package:yd_lotto_provider/src/srceens/qr_code/qr_code.dart';
 import 'package:yd_lotto_provider/src/srceens/search/search.dart';
 import 'package:yd_lotto_provider/src/srceens/splash/splash.dart';
 import 'package:yd_lotto_provider/src/srceens/statistics/statistic.dart';
@@ -15,7 +17,6 @@ import 'package:yd_lotto_provider/src/srceens/statistics/statistic.dart';
 class LottoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final botToastBuilder = BotToastInit();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<LottoRoundProvider>(
@@ -25,9 +26,8 @@ class LottoApp extends StatelessWidget {
         ChangeNotifierProvider<LottoPlaceProvider>(
             create: (_) => LottoPlaceProvider()),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         builder: (BuildContext context, Widget child) {
-          child = botToastBuilder(context, child);
           child = MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
             child: child,
@@ -37,15 +37,15 @@ class LottoApp extends StatelessWidget {
         title: 'Lotto',
         theme: buildColorTheme(),
         home: SplashView(),
-        navigatorObservers: [BotToastNavigatorObserver()],
-        routes: {
-          SplashView.routeName: (context) => SplashView(),
-          BottomNaviView.routeName: (context) => BottomNaviView(),
-          HomeView.routeName: (context) => HomeView(),
-          SearchView.routeName: (context) => SearchView(),
-          StatisticView.routeName: (context) => StatisticView(),
-          GoogleMapViw.routeName: (context) => GoogleMapViw()
-        },
+        getPages: [
+          GetPage(name: '/', page: () => SplashView()),
+          GetPage(name: '/bottom_navi', page: () => BottomNaviView()),
+          GetPage(name: '/home', page: () => HomeView()),
+          GetPage(name: '/search', page: () => SearchView()),
+          GetPage(name: '/statics', page: () => NumberMakeView()),
+          GetPage(name: '/google_map', page: () => GoogleMapViw()),
+          GetPage(name: '/qr_code', page: () => QrCodeView()),
+        ],
       ),
     );
   }

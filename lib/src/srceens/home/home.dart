@@ -1,10 +1,9 @@
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:yd_lotto_provider/src/config/color_theme.dart';
 import 'package:yd_lotto_provider/src/config/font_theme.dart';
 import 'package:yd_lotto_provider/src/constant/ad_mob.dart';
-import 'package:yd_lotto_provider/src/global/widgets/admob_banner.dart';
 import 'package:yd_lotto_provider/src/global/widgets/bottom_widget.dart';
 import 'package:yd_lotto_provider/src/providers/lotto_round_provider.dart';
 import 'package:yd_lotto_provider/src/providers/lotto_total_value_provider.dart';
@@ -14,7 +13,6 @@ import 'package:yd_lotto_provider/src/utils/animations/digit_up.dart';
 import 'package:yd_lotto_provider/src/utils/formats/number_format.dart';
 
 class HomeView extends StatefulWidget {
-  static const String routeName = '/home';
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -25,14 +23,22 @@ class _HomeViewState extends State<HomeView>
   int _currentValue = 1;
   int _fixedCurrentValue = 1;
   bool isLoading;
-  AdmobBannerSize bannerSize;
+
+
+
+
 
   @override
   void initState() {
     initLottoRound();
-    bannerSize = AdmobBannerSize.BANNER;
+
     super.initState();
   }
+
+
+
+
+
 
   void initLottoRound() async {
     setState(() {
@@ -130,8 +136,6 @@ class _HomeViewState extends State<HomeView>
           height: 30,
         ),
         LottoBalls(),
-        Expanded(child:Container()),
-                AdmobBannerWidget(),
           ],
         ),
     )

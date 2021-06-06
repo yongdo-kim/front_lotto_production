@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:yd_lotto_provider/src/config/font_theme.dart';
@@ -9,43 +12,87 @@ import 'package:yd_lotto_provider/src/providers/lotto_total_value_provider.dart'
 import 'package:yd_lotto_provider/src/srceens/bottomNavi/bottom_navi.dart';
 
 class SplashView extends StatefulWidget {
-  static const String routeName = '/splash';
 
   @override
   _SplashViewState createState() => _SplashViewState();
 }
 
 class _SplashViewState extends State<SplashView> {
+
+  static final AdRequest request = AdRequest(
+    testDevices: <String>['ca-app-pub-2398130378795170/4653550280'],
+  );
+  InterstitialAd _interstitialAd;
+  bool _interstitialReady = false;
+
+
   @override
   initState() {
     initProvider();
+
+    MobileAds.instance.initialize().then((InitializationStatus status) {
+      print('Initialization done: ${status.adapterStatuses}');
+      MobileAds.instance
+          .updateRequestConfiguration(RequestConfiguration(
+          tagForChildDirectedTreatment:
+          TagForChildDirectedTreatment.unspecified))
+          .then((void value) {
+        createInterstitialAd();
+      });
+    });
+
     super.initState();
   }
 
-  void initProvider() async {
+  Future createInterstitialAd() async{
+    _interstitialAd ??= InterstitialAd(
+      adUnitId: 'ca-app-pub-2398130378795170/4653550280',
+      request: request,
+      listener: AdListener(
+        onAdLoaded: (Ad ad) {
+          print('${ad.runtimeType} loaded.');
+          setState(() {
+            _interstitialReady = true;
+          });
+          if(_interstitialReady){
+            _interstitialAd.show();
+          }
+        },
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          print('${ad.runtimeType} failed to load: $error.');
+          ad.dispose();
+          _interstitialAd = null;
+          createInterstitialAd();
+        },
+        onAdOpened: (Ad ad) => print('${ad.runtimeType} onAdOpened.'),
+        onAdClosed: (Ad ad) {
+          print('${ad.runtimeType} closed.');
+          ad.dispose();
+          createInterstitialAd();
+        },
+        onApplicationExit: (Ad ad) =>
+            print('${ad.runtimeType} onApplicationExit.'),
+      ),
+    )..load();
+  }
 
+  void initProvider() async {
+    //지도 퍼미션
     Map<Permission, PermissionStatus> statuses = await [
       Permission.location,
     ].request();
     print(statuses[Permission.location]);
 
-    if (await Permission.speech.isPermanentlyDenied) {
-      openAppSettings();
-    }
-
-
-
+    //데이터 가져오기
     await Future.wait([
       Provider.of<LottoRoundProvider>(context, listen: false).initialize(),
       Provider.of<LottoPlaceProvider>(context, listen: false).initialize(),
-      Provider.of<LottoTotalProvider>(context, listen: false).initialize()
+      Provider.of<LottoTotalProvider>(context, listen: false).initialize(),
     ]).then((value) => navigateToHomeView());
   }
 
   Future<void> navigateToHomeView() async {
-    await Navigator.of(context).pushReplacementNamed(
-      BottomNaviView.routeName,
-    );
+    await Get.off(() => BottomNaviView());
   }
 
   @override
@@ -100,7 +147,8 @@ class _SplashViewState extends State<SplashView> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                           mainAxisAlignment: MainAxisAlignment.end,
                                           children: [
                                             Text("오늘도 1등",
@@ -109,8 +157,8 @@ class _SplashViewState extends State<SplashView> {
                                             Row(
                                               children: [
                                                 Text("Lotto",
-                                                    style: FontTheme.cR25Bold
-                                                        .apply(color: Colors.black)),
+                                                    style: FontTheme.cR25Bold.apply(
+                                                        color: Colors.black)),
                                                 SizedBox(
                                                   width: 5,
                                                 ),
@@ -124,8 +172,10 @@ class _SplashViewState extends State<SplashView> {
                                         SizedBox(
                                           width: 20,
                                         ),
-                                        Image.asset('assets/images/lotto_qrcode.png',
-                                            width: 50.0, height: 50.0),
+                                        Image.asset(
+                                            'assets/images/lotto_qrcode.png',
+                                            width: 50.0,
+                                            height: 50.0),
                                       ],
                                     ),
                                     Column(
@@ -152,8 +202,10 @@ class _SplashViewState extends State<SplashView> {
                                           height: 5,
                                         ),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               "위치  :  ",
@@ -164,7 +216,7 @@ class _SplashViewState extends State<SplashView> {
                                             ),
                                             Expanded(
                                                 child: Text(
-                                                  "집 바로 앞",
+                                                  "내가 사러 가는 곳",
                                                   style: FontTheme.cR15Regular,
                                                 ))
                                           ],
@@ -175,9 +227,10 @@ class _SplashViewState extends State<SplashView> {
                                         Container(
                                           decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Color(0xFFE7B5C1), width: 1),
-                                              borderRadius:
-                                              BorderRadius.all(Radius.circular(5))),
+                                                  color: Color(0xFFE7B5C1),
+                                                  width: 1),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5))),
                                           child: Center(
                                             child: Text("행운의 주인공은?",
                                                 style: FontTheme.cR20Regular
@@ -219,14 +272,17 @@ class _SplashViewState extends State<SplashView> {
                       ))
                 ],
               ),
-              SizedBox(height: 20,),
-              Container(child: Text("로또6",style: FontTheme.cR30Regular,),),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                child: Text(
+                  "로또6",
+                  style: FontTheme.cR30Regular,
+                ),
+              ),
             ],
           ),
-        )
-
-    );
+        ));
   }
 }
-
-

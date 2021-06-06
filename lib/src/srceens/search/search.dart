@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_dialog/flutter_custom_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:yd_lotto_provider/src/config/font_theme.dart';
-import 'package:yd_lotto_provider/src/global/widgets/admob_banner.dart';
 import 'package:yd_lotto_provider/src/global/widgets/bottom_widget.dart';
 import 'package:yd_lotto_provider/src/models/lottoPlaceModel.dart';
 import 'package:yd_lotto_provider/src/providers/lotto_place_provider.dart';
@@ -64,12 +63,6 @@ class _SearchViewState extends State<SearchView> {
                             .toList())
                   ],
                 )),
-            Column(
-              children: [
-                Expanded(child: Container(),),
-                AdmobBannerWidget(),
-              ],
-            )
           ],
         )
             :Stack(
@@ -83,12 +76,6 @@ class _SearchViewState extends State<SearchView> {
                   ),
                 ),
               ),
-            Column(
-              children: [
-                Expanded(child: Container(),),
-                AdmobBannerWidget(),
-              ],
-            )
           ],
         );
       },

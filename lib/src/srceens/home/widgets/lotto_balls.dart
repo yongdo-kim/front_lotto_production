@@ -24,27 +24,27 @@ class _LottoBallsState extends State<LottoBalls> with TickerProviderStateMixin {
           children: <Widget>[
             LottoBall(
               num: ball.drwtNo1,
-              textStyle: FontTheme.cR20Regular.apply(color: Colors.white),
+              textStyle: FontTheme.cR25Regular.apply(color: Colors.white),
             ),
             LottoBall(
               num: ball.drwtNo2,
-              textStyle: FontTheme.cR20Regular.apply(color: Colors.white),
+              textStyle: FontTheme.cR25Regular.apply(color: Colors.white),
             ),
             LottoBall(
               num: ball.drwtNo3,
-              textStyle: FontTheme.cR20Regular.apply(color: Colors.white),
+              textStyle: FontTheme.cR25Regular.apply(color: Colors.white),
             ),
             LottoBall(
               num: ball.drwtNo4,
-              textStyle: FontTheme.cR20Regular.apply(color: Colors.white),
+              textStyle: FontTheme.cR25Regular.apply(color: Colors.white),
             ),
             LottoBall(
               num: ball.drwtNo5,
-              textStyle: FontTheme.cR20Regular.apply(color: Colors.white),
+              textStyle: FontTheme.cR25Regular.apply(color: Colors.white),
             ),
             LottoBall(
               num: ball.drwtNo6,
-              textStyle: FontTheme.cR20Regular.apply(color: Colors.white),
+              textStyle: FontTheme.cR25Regular.apply(color: Colors.white),
             ),
             Icon(
               Icons.add,
@@ -52,7 +52,7 @@ class _LottoBallsState extends State<LottoBalls> with TickerProviderStateMixin {
             ),
             LottoBall(
               num: ball.bnusNo,
-              textStyle: FontTheme.cR20Regular.apply(color: Colors.white),
+              textStyle: FontTheme.cR25Regular.apply(color: Colors.white),
             ),
           ],
         ),
@@ -60,4 +60,3 @@ class _LottoBallsState extends State<LottoBalls> with TickerProviderStateMixin {
     });
   }
 }
-

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:yd_lotto_provider/src/config/font_theme.dart';
-import 'package:yd_lotto_provider/src/global/widgets/admob_banner.dart';
 
 class GoogleMapViw extends StatefulWidget {
   static const String routeName = '/google_map';

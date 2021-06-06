@@ -42,20 +42,21 @@ dependencies:
   google_maps_flutter: ^1.2.0
   geocoding: ^1.0.5
   geolocator: ^6.2.1
-
+  #router
+  get: ^3.23.0
 
   #util
   sleek_circular_slider: ^1.2.0+web
-  bot_toast: ^3.0.0
   flutter_custom_dialog: ^1.0.20
   permission_handler: ^5.1.0+2
   dotted_decoration: ^1.2.2
-
+  scan: ^0.0.7
+  url_launcher: ^5.4.0
   #app_launcher
   flutter_launcher_icons: ^0.8.1
+  google_mobile_ads: ^0.12.2+1
 
-  #admob
-  admob_flutter: ^1.0.0
+
 
 
 
